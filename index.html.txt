@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TETRISA — Премиальный Салон Красоты</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Playfair Display & Cormorant Garamond & Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nude: {
+                            50: '#FAF7F5',
+                            100: '#F5EFEA',
+                            200: '#E8DCD3',
+                            300: '#D9C5B7',
+                            400: '#C2A796',
+                            500: '#A88B77',
+                        },
+                        roseGold: '#D4AF37',
+                        champagne: '#F7E7CE',
+                        darkCharcoal: '#1A1818',
+                        softBlack: '#262322'
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #FAF7F5;
+            color: #262322;
+        }
+        .font-serif-title {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(217, 197, 183, 0.3);
+        }
+        .glass-dark {
+            background: rgba(26, 24, 24, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF7F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D9C5B7;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #A88B77;
+        }
+        /* Hide scrollbar for category tabs on mobile */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="min-h-full flex flex-col pb-24 md:pb-28 selection:bg-nude-300 selection:text-darkCharcoal">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 glass-panel shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo Section -->
+            <div class="flex items-center gap-4">
+                <!-- heeels.img logo placeholder with graceful fallback -->
+                <div class="relative w-12 h-12 rounded-full overflow-hidden border border-nude-300 bg-nude-100 flex items-center justify-center shrink-0 shadow-inner group">
+                    <img 
+                        src="heeels.img" 
+                        alt="heeels" 
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\"fa-solid fa-gem text-nude-500 text-lg\"></i>';"
+                    />
+                </div>
+                <div>
+                    <span class="block text-2xl sm:text-3xl font-serif-title font-bold tracking-widest text-darkCharcoal uppercase">TETRISA</span>
+                    <span class="block text-[9px] sm:text-[10px] tracking-[0.25em] text-nude-500 uppercase -mt-1 font-medium">Beauty Studio</span>
+                </div>
+            </div>
+
+            <!-- Header Action Button (Desktop & Mobile) -->
+            <div class="flex items-center gap-3">
+                <a href="tel:+77000000000" class="hidden sm:flex items-center gap-2 text-xs font-medium text-darkCharcoal hover:text-nude-500 transition-colors px-3 py-2">
+                    <i class="fa-solid fa-phone text-roseGold"></i>
+                    <span>+7 (700) 000-00-00</span>
+                </a>
+                <button onclick="openBookingModal()" class="bg-darkCharcoal hover:bg-nude-500 text-white text-xs sm:text-sm font-medium tracking-wider uppercase px-5 py-2.5 rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform active:scale-95 flex items-center gap-2">
+                    <i class="fa-regular fa-calendar-check text-roseGold"></i>
+                    <span>Записаться</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero / Banner Section -->
+    <section class="relative py-12 md:py-16 bg-gradient-to-b from-nude-100/50 to-nude-50 border-b border-nude-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="inline-block px-4 py-1.5 rounded-full bg-nude-200/60 text-nude-500 text-xs font-semibold uppercase tracking-widest mb-3">
+                Премиальный уход & Гармония
+            </span>
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-serif-title text-darkCharcoal font-medium tracking-wide leading-tight mb-4">
+                Искусство подчеркивать вашу уникальность
+            </h1>
+            <p class="max-w-2xl mx-auto text-sm sm:text-base text-gray-600 font-light leading-relaxed mb-6">
+                Погрузитесь в атмосферу заботы, красоты и эстетики. Профессиональные мастера, топовые материалы и безупречный сервис.
+            </p>
+            
+            <!-- Global Search Bar -->
+            <div class="max-w-md mx-auto relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-nude-400"></i>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    oninput="handleSearch()"
+                    placeholder="Поиск по услугам (например: Маникюр, Кератин)..." 
+                    class="w-full pl-11 pr-10 py-3 rounded-full bg-white border border-nude-300 focus:outline-none focus:ring-2 focus:ring-nude-400 focus:border-transparent text-sm shadow-sm transition-all"
+                >
+                <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-darkCharcoal text-xs">
+                    <i class="fa-solid fa-xmark text-base"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        
+        <!-- Category Navigation Tabs (Desktop / Top Selector) -->
+        <div class="mb-8 overflow-x-auto no-scrollbar py-2">
+            <div class="flex items-center justify-start md:justify-center gap-2 min-w-max">
+                <button onclick="switchTab(1)" id="top-tab-1" class="tab-btn px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider transition-all duration-300 flex items-center gap-2 border">
+                    <i class="fa-solid fa-scissors"></i> Парикмахерский зал
+                </button>
+                <button onclick="switchTab(2)" id="top-tab-2" class="tab-btn px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider transition-all duration-300 flex items-center gap-2 border">
+                    <i class="fa-solid fa-hand-sparkles"></i> Ногтевой сервис
+                </button>
+                <button onclick="switchTab(3)" id="top-tab-3" class="tab-btn px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider transition-all duration-300 flex items-center gap-2 border">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Косметология
+                </button>
+                <button onclick="switchTab(4)" id="top-tab-4" class="tab-btn px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider transition-all duration-300 flex items-center gap-2 border">
+                    <i class="fa-solid fa-eye"></i> Макияж и Брови
+                </button>
+                <button onclick="switchTab(5)" id="top-tab-5" class="tab-btn px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider transition-all duration-300 flex items-center gap-2 border">
+                    <i class="fa-solid fa-spa"></i> SPA и Массаж
+                </button>
+            </div>
+        </div>
+
+        <!-- Section Banner Info -->
+        <div id="sectionHeader" class="mb-8 text-center sm:text-left border-b border-nude-200 pb-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <h2 id="sectionTitle" class="text-2xl sm:text-3xl font-serif-title font-semibold text-darkCharcoal"></h2>
+                <p id="sectionDesc" class="text-xs sm:text-sm text-gray-500 mt-1 font-light"></p>
+            </div>
+            <span id="serviceCount" class="text-xs font-semibold uppercase tracking-wider text-nude-500 bg-nude-100 px-3 py-1.5 rounded-full border border-nude-200"></span>
+        </div>
+
+        <!-- Services Cards Grid Container -->
+        <div id="servicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Dynamic Content Injected via JS -->
+        </div>
+
+        <!-- No Results State -->
+        <div id="noResults" class="hidden text-center py-16">
+            <i class="fa-solid fa-circle-exclamation text-4xl text-nude-300 mb-3"></i>
+            <h3 class="text-lg font-serif-title text-darkCharcoal font-medium">Ничего не найдено</h3>
+            <p class="text-xs text-gray-500 mt-1">Попробуйте изменить поисковый запрос</p>
+            <button onclick="clearSearch()" class="mt-4 px-4 py-2 bg-nude-200 hover:bg-nude-300 text-darkCharcoal rounded-full text-xs font-medium transition-colors">
+                Сбросить поиск
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer Information -->
+    <footer class="mt-12 border-t border-nude-200 bg-white py-8 text-center text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <span class="font-serif-title text-base font-bold text-darkCharcoal">TETRISA</span>
+                <span>© 2026 Все права защищены.</span>
+            </div>
+            <div class="flex items-center gap-6 text-sm text-darkCharcoal">
+                <a href="#" class="hover:text-roseGold transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-roseGold transition-colors"><i class="fa-brands fa-telegram"></i></a>
+                <a href="#" class="hover:text-roseGold transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed Bottom Navigation Bar (5 Tabs) -->
+    <nav class="fixed bottom-0 left-0 right-0 z-40 glass-dark text-white px-2 py-2 sm:py-3 shadow-2xl">
+        <div class="max-w-md md:max-w-2xl mx-auto flex justify-around items-center">
+            
+            <!-- Tab 1 -->
+            <button onclick="switchTab(1)" id="bottom-tab-1" class="nav-item flex flex-col items-center gap-1 px-2 py-1 rounded-xl transition-all duration-300 group">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center transition-all group-hover:scale-110">
+                    <i class="fa-solid fa-scissors text-base"></i>
+                </div>
+                <span class="text-[10px] sm:text-xs font-medium tracking-tight">Волосы</span>
+            </button>
+
+            <!-- Tab 2 -->
+            <button onclick="switchTab(2)" id="bottom-tab-2" class="nav-item flex flex-col items-center gap-1 px-2 py-1 rounded-xl transition-all duration-300 group">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center transition-all group-hover:scale-110">
+                    <i class="fa-solid fa-hand-sparkles text-base"></i>
+                </div>
+                <span class="text-[10px] sm:text-xs font-medium tracking-tight">Ногти</span>
+            </button>
+
+            <!-- Tab 3 -->
+            <button onclick="switchTab(3)" id="bottom-tab-3" class="nav-item flex flex-col items-center gap-1 px-2 py-1 rounded-xl transition-all duration-300 group">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center transition-all group-hover:scale-110">
+                    <i class="fa-solid fa-wand-magic-sparkles text-base"></i>
+                </div>
+                <span class="text-[10px] sm:text-xs font-medium tracking-tight">Уход</span>
+            </button>
+
+            <!-- Tab 4 -->
+            <button onclick="switchTab(4)" id="bottom-tab-4" class="nav-item flex flex-col items-center gap-1 px-2 py-1 rounded-xl transition-all duration-300 group">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center transition-all group-hover:scale-110">
+                    <i class="fa-solid fa-eye text-base"></i>
+                </div>
+                <span class="text-[10px] sm:text-xs font-medium tracking-tight">Макияж</span>
+            </button>
+
+            <!-- Tab 5 -->
+            <button onclick="switchTab(5)" id="bottom-tab-5" class="nav-item flex flex-col items-center gap-1 px-2 py-1 rounded-xl transition-all duration-300 group">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center transition-all group-hover:scale-110">
+                    <i class="fa-solid fa-spa text-base"></i>
+                </div>
+                <span class="text-[10px] sm:text-xs font-medium tracking-tight">SPA</span>
+            </button>
+
+        </div>
+    </nav>
+
+    <!-- Booking Modal Dialog -->
+    <div id="bookingModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-darkCharcoal/60 backdrop-blur-sm transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-nude-200 transform transition-transform duration-300 scale-95 opacity-0" id="modalCard">
+            
+            <button onclick="closeBookingModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-nude-100 hover:bg-nude-200 text-darkCharcoal flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="mb-6">
+                <span class="text-xs uppercase tracking-widest text-nude-500 font-semibold">Онлайн запись</span>
+                <h3 class="text-2xl font-serif-title font-semibold text-darkCharcoal">Салон TETRISA</h3>
+                <p class="text-xs text-gray-500 mt-1">Оставьте свои данные, и мы свяжемся для подтверждения</p>
+            </div>
+
+            <form id="bookingForm" onsubmit="submitBooking(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 uppercase tracking-wider mb-1">Ваше имя</label>
+                    <input type="text" required placeholder="Елена" class="w-full px-4 py-2.5 rounded-xl bg-nude-50 border border-nude-200 focus:outline-none focus:ring-2 focus:ring-nude-400 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 uppercase tracking-wider mb-1">Номер телефона</label>
+                    <input type="tel" required placeholder="+7 (___) ___-__-__" class="w-full px-4 py-2.5 rounded-xl bg-nude-50 border border-nude-200 focus:outline-none focus:ring-2 focus:ring-nude-400 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 uppercase tracking-wider mb-1">Выберите услугу</label>
+                    <select id="modalServiceSelect" required class="w-full px-4 py-2.5 rounded-xl bg-nude-50 border border-nude-200 focus:outline-none focus:ring-2 focus:ring-nude-400 text-sm">
+                        <!-- Populated dynamically via JS -->
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 uppercase tracking-wider mb-1">Дата</label>
+                        <input type="date" required class="w-full px-3 py-2.5 rounded-xl bg-nude-50 border border-nude-200 focus:outline-none focus:ring-2 focus:ring-nude-400 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 uppercase tracking-wider mb-1">Время</label>
+                        <select required class="w-full px-3 py-2.5 rounded-xl bg-nude-50 border border-nude-200 focus:outline-none focus:ring-2 focus:ring-nude-400 text-sm">
+                            <option>10:00</option>
+                            <option>12:00</option>
+                            <option>14:00</option>
+                            <option>16:00</option>
+                            <option>18:00</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full mt-6 bg-darkCharcoal hover:bg-nude-500 text-white font-medium py-3 rounded-xl transition-all shadow-lg text-sm uppercase tracking-wider flex items-center justify-center gap-2">
+                    <span>Подтвердить запись</span>
+                    <i class="fa-solid fa-arrow-right text-roseGold"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed top-24 right-4 z-50 transform translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="glass-panel border-l-4 border-roseGold text-darkCharcoal px-5 py-4 rounded-xl shadow-xl flex items-center gap-3 max-w-sm">
+            <i class="fa-solid fa-circle-check text-roseGold text-xl"></i>
+            <div>
+                <h4 class="font-semibold text-sm">Заявка отправлена!</h4>
+                <p class="text-xs text-gray-600">Администратор TETRISA перезвонит вам в течение 10 минут.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Data and Application Logic -->
+    <script>
+        // Data Store with 5 Sections & Services
+        const salonData = [
+            {
+                id: 1,
+                title: "Парикмахерский зал",
+                description: "Авторские стрижки, премиальное окрашивание и спа-уход для сохранения здоровья волос.",
+                services: [
+                    { name: "Женская модельная стрижка", desc: "Консультация, мытье головы, стрижка, легкая укладка", priceRub: 2500, priceKzt: 14500, duration: "60 мин", badge: "Хит" },
+                    { name: "Сложное окрашивание (Airtouch / Balayage)", desc: "Осветление по авторской технике, тонирование и защита", priceRub: 8500, priceKzt: 49000, duration: "180 мин", badge: "Премиум" },
+                    { name: "Укладка & Локоны", desc: "Создание объема или голливудской волны для мероприятий", priceRub: 2200, priceKzt: 12500, duration: "45 мин", badge: null },
+                    { name: "Спа-восстановление «Счастье для волос»", desc: "Многоступенчатый глубокий уход и реконструкция", priceRub: 4000, priceKzt: 23000, duration: "90 мин", badge: "Уход" },
+                    { name: "Кератиновое выпрямление", desc: "Идеальная гладкость, блеск и защитный барьер на 4-6 месяцев", priceRub: 6500, priceKzt: 37500, duration: "150 мин", badge: "Популярно" }
+                ]
+            },
+            {
+                id: 2,
+                title: "Ногтевой сервис",
+                description: "Безупречный маникюр и педикюр с высокой стойкостью и заботой о коже рук и ног.",
+                services: [
+                    { name: "Маникюр с покрытием Gel Polish", desc: "Снятие, аппаратный/комби маникюр, выравнивание, цвет", priceRub: 1900, priceKzt: 11000, duration: "90 мин", badge: "Хит" },
+                    { name: "Smart-Педикюр с покрытием", desc: "Инновационная обработка стоп дисками и гель-лак", priceRub: 2800, priceKzt: 16000, duration: "90 мин", badge: "Комфорт" },
+                    { name: "Наращивание ногтей (Гель / Акригель)", desc: "Моделирование формы, длина на выбор, однотонное покрытие", priceRub: 3500, priceKzt: 20000, duration: "120 мин", badge: "Премиум" },
+                    { name: "SPA-уход для рук с парафинотерапией", desc: "Пилинг, питательная маска, теплый парафин и массаж", priceRub: 1200, priceKzt: 7000, duration: "30 мин", badge: "Релакс" },
+                    { name: "Авторский дизайн (10 ногтей)", desc: "Френч, градиент, геометрия, инкрустация стразами", priceRub: 1000, priceKzt: 5800, duration: "30 мин", badge: null }
+                ]
+            },
+            {
+                id: 3,
+                title: "Косметология и Уход",
+                description: "Индивидуальные протоколы омоложения, чистки и сияния вашей кожи.",
+                services: [
+                    { name: "Комбинированная чистка лица", desc: "Ультразвук + механическая чистка, успокаивающая маска", priceRub: 3200, priceKzt: 18500, duration: "90 мин", badge: "Базовый" },
+                    { name: "Всесезонный пилинг BioRePeel", desc: "Омоложение без шелушения и периода реабилитации", priceRub: 4500, priceKzt: 26000, duration: "45 мин", badge: "Топ" },
+                    { name: "Скульптурирующий массаж лица", desc: "Лифтинг-эффект, снятие отечности и проработка мышц", priceRub: 2700, priceKzt: 15500, duration: "50 мин", badge: "Релакс" },
+                    { name: "Альгинатная маска с сывороткой", desc: "Мгновенный гидратирующий буст и ровный тон", priceRub: 1500, priceKzt: 8700, duration: "30 мин", badge: null },
+                    { name: "Программа «Глубокое Увлажнение»", desc: "Комплекс ухода с гиалуроновой кислотой для сухости", priceRub: 3800, priceKzt: 22000, duration: "60 мин", badge: "Премиум" }
+                ]
+            },
+            {
+                id: 4,
+                title: "Макияж и Брови",
+                description: "Акцент на вашу естественную красоту и создание эффектных вечерних образов.",
+                services: [
+                    { name: "Архитектура & Окрашивание бровей", desc: "Коррекция (воск/пинцет), подбор формы и окрашивание", priceRub: 1200, priceKzt: 7000, duration: "45 мин", badge: "Хит" },
+                    { name: "Ламинирование ресниц + ботокс", desc: "Изгиб, окрашивание и глубокое питание своих ресниц", priceRub: 2400, priceKzt: 14000, duration: "60 мин", badge: "Эффект" },
+                    { name: "Вечерний / Сモーキー макияж", desc: "Стойкий макияж любой сложности с пучковыми ресницами", priceRub: 3200, priceKzt: 18500, duration: "75 мин", badge: "Стиль" },
+                    { name: "Свадебный образ (Макияж + Прическа)", desc: "Создание нежного стойкого образа невесты + репетиция", priceRub: 9000, priceKzt: 52000, duration: "150 мин", badge: "VIP" },
+                    { name: "Окрашивание хной (Brow Henna)", desc: "Стойкое окрашивание с эффектом татуажа до 3 недель", priceRub: 1400, priceKzt: 8000, duration: "45 мин", badge: null }
+                ]
+            },
+            {
+                id: 5,
+                title: "SPA и Массаж",
+                description: "Полное расслабление тела и восстановление жизненных сил в спокойной атмосфере.",
+                services: [
+                    { name: "Аромамассаж всего тела", desc: "Мягкие техники с премиальными натуральными маслами", priceRub: 3500, priceKzt: 20000, duration: "60 мин", badge: "Релакс" },
+                    { name: "Детокс-обертывание (Ламинария)", desc: "Выведение токсинов, подтяжка кожи и лимфодренаж", priceRub: 3800, priceKzt: 22000, duration: "75 мин", badge: "Детокс" },
+                    { name: "Расслабляющий SPA-комплекс «TETRISA»", desc: "Скраб, массаж 90 мин, обертывание и чайная церемония", priceRub: 7500, priceKzt: 43000, duration: "150 мин", badge: "Премиум" },
+                    { name: "Солевое скрабирование тела", desc: "Обновление кожи, мягкость и подготовка к загару/массажу", priceRub: 1800, priceKzt: 10500, duration: "30 мин", badge: null },
+                    { name: "Стоун-терапия (Массаж горячими камнями)", desc: "Глубокое прогревание мышц и снятие эмоционального блока", priceRub: 4200, priceKzt: 24000, duration: "80 мин", badge: "Хит" }
+                ]
+            }
+        ];
+
+        let currentTabId = 1;
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTabContent(currentTabId);
+            populateModalOptions();
+        });
+
+        // Switch Tabs Function
+        function switchTab(tabId) {
+            currentTabId = tabId;
+            
+            // Clear search query if active
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput.value) {
+                searchInput.value = '';
+                document.getElementById('clearSearchBtn').classList.add('hidden');
+            }
+
+            renderTabContent(tabId);
+
+            // Smooth scroll to top of services grid if scrolled down
+            const gridTop = document.getElementById('sectionHeader').getBoundingClientRect().top + window.scrollY - 100;
+            if (window.scrollY > 300) {
+                window.scrollTo({ top: gridTop, behavior: 'smooth' });
+            }
+        }
+
+        // Render Active Tab Content
+        function renderTabContent(tabId) {
+            const currentData = salonData.find(item => item.id === tabId);
+            if (!currentData) return;
+
+            // Update Active UI States for Buttons
+            updateTabButtonsState(tabId);
+
+            // Header info
+            document.getElementById('sectionTitle').innerText = currentData.title;
+            document.getElementById('sectionDesc').innerText = currentData.description;
+            document.getElementById('serviceCount').innerText = `${currentData.services.length} услуг(-и)`;
+
+            // Render Cards
+            renderCards(currentData.services);
+        }
+
+        // Render Cards List
+        function renderCards(servicesList) {
+            const grid = document.getElementById('servicesGrid');
+            const noResults = document.getElementById('noResults');
+
+            if (servicesList.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+
+            grid.innerHTML = servicesList.map(service => `
+                <div class="bg-white rounded-2xl p-6 border border-nude-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1">
+                    <div>
+                        <div class="flex justify-between items-start gap-2 mb-3">
+                            <h3 class="font-serif-title font-semibold text-lg text-darkCharcoal group-hover:text-nude-500 transition-colors">
+                                ${service.name}
+                            </h3>
+                            ${service.badge ? `
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-nude-100 text-nude-500 border border-nude-200 shrink-0">
+                                    ${service.badge}
+                                </span>
+                            ` : ''}
+                        </div>
+                        <p class="text-xs text-gray-500 leading-relaxed font-light mb-4">
+                            ${service.desc}
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-nude-100 flex items-center justify-between mt-auto">
+                        <div>
+                            <div class="text-base font-bold text-darkCharcoal">
+                                ${service.priceRub.toLocaleString()} ₽
+                            </div>
+                            <div class="text-[11px] text-gray-400 font-medium">
+                                ~ ${service.priceKzt.toLocaleString()} ₸
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <span class="text-[11px] text-gray-400 flex items-center gap-1">
+                                <i class="fa-regular fa-clock text-nude-400"></i> ${service.duration}
+                            </span>
+                            <button onclick="openBookingModal('${service.name}')" class="w-9 h-9 rounded-full bg-nude-100 hover:bg-darkCharcoal text-darkCharcoal hover:text-white flex items-center justify-center transition-all duration-300">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Update CSS Classes for Top & Bottom Navigation
+        function updateTabButtonsState(activeId) {
+            // Update Top Tabs
+            for (let i = 1; i <= 5; i++) {
+                const topTab = document.getElementById(`top-tab-${i}`);
+                if (topTab) {
+                    if (i === activeId) {
+                        topTab.className = "tab-btn px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider transition-all duration-300 flex items-center gap-2 bg-darkCharcoal text-white border-darkCharcoal shadow-md";
+                    } else {
+                        topTab.className = "tab-btn px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider transition-all duration-300 flex items-center gap-2 bg-white text-gray-600 border-nude-200 hover:border-nude-400 hover:bg-nude-50";
+                    }
+                }
+            }
+
+            // Update Bottom Fixed Navigation Tabs
+            for (let i = 1; i <= 5; i++) {
+                const bottomTab = document.getElementById(`bottom-tab-${i}`);
+                if (bottomTab) {
+                    const iconWrapper = bottomTab.querySelector('div');
+                    if (i === activeId) {
+                        bottomTab.className = "nav-item flex flex-col items-center gap-1 px-3 py-1 rounded-xl transition-all duration-300 text-roseGold";
+                        iconWrapper.className = "w-8 h-8 rounded-full flex items-center justify-center transition-all bg-white/10 shadow-inner";
+                    } else {
+                        bottomTab.className = "nav-item flex flex-col items-center gap-1 px-3 py-1 rounded-xl transition-all duration-300 text-gray-400 hover:text-white";
+                        iconWrapper.className = "w-8 h-8 rounded-full flex items-center justify-center transition-all";
+                    }
+                }
+            }
+        }
+
+        // Live Search Handler across all categories
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            const clearBtn = document.getElementById('clearSearchBtn');
+
+            if (query.length > 0) {
+                clearBtn.classList.remove('hidden');
+                
+                // Filter all services across all categories
+                let allServices = [];
+                salonData.forEach(cat => {
+                    cat.services.forEach(serv => {
+                        if (serv.name.toLowerCase().includes(query) || serv.desc.toLowerCase().includes(query)) {
+                            allServices.push(serv);
+                        }
+                    });
+                });
+
+                document.getElementById('sectionTitle').innerText = `Результаты поиска`;
+                document.getElementById('sectionDesc').innerText = `По запросу: "${query}"`;
+                document.getElementById('serviceCount').innerText = `${allServices.length} найдено`;
+
+                renderCards(allServices);
+
+            } else {
+                clearBtn.classList.add('hidden');
+                renderTabContent(currentTabId);
+            }
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('clearSearchBtn').classList.add('hidden');
+            renderTabContent(currentTabId);
+        }
+
+        // Modal Logic
+        function populateModalOptions() {
+            const select = document.getElementById('modalServiceSelect');
+            select.innerHTML = '';
+            
+            salonData.forEach(cat => {
+                const group = document.createElement('optgroup');
+                group.label = cat.title;
+                cat.services.forEach(serv => {
+                    const opt = document.createElement('option');
+                    opt.value = serv.name;
+                    opt.textContent = `${serv.name} (${serv.priceRub} ₽)`;
+                    group.appendChild(opt);
+                });
+                select.appendChild(group);
+            });
+        }
+
+        function openBookingModal(preselectedService = null) {
+            const modal = document.getElementById('bookingModal');
+            const card = document.getElementById('modalCard');
+            const select = document.getElementById('modalServiceSelect');
+
+            if (preselectedService) {
+                select.value = preselectedService;
+            }
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                card.classList.remove('scale-95', 'opacity-0');
+                card.classList.add('scale-100', 'opacity-100');
+            }, 10);
+
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            const card = document.getElementById('modalCard');
+
+            card.classList.remove('scale-100', 'opacity-100');
+            card.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        function submitBooking(event) {
+            event.preventDefault();
+            closeBookingModal();
+            showToast();
+            event.target.reset();
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-x-full');
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 4000);
+        }
+
+        // Close Modal when clicking background
+        document.getElementById('bookingModal').addEventListener('click', (e) => {
+            if (e.target.id === 'bookingModal') {
+                closeBookingModal();
+            }
+        });
+    </script>
+</body>
+</html>
